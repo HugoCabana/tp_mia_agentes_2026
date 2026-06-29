@@ -11,3 +11,20 @@ Regístrenlas en `student_framework/__init__.py:build_agent`.
 Mira `example.py`: callable tipado + `ToolSchema.from_callable(...)`.
 Detalle completo en `ENUNCIADO_M1.md`.
 """
+from __future__ import annotations
+
+from mia_agents.llm_client import LLMClient
+from student_framework.agent import MyAgent
+from student_framework.tools.calculadora import calculadora, calculadora_schema
+
+
+def build_agent(config: dict | None = None) -> MyAgent:
+    config = config or {}
+    llm = config.get("llm_client") or LLMClient.from_env()
+    agent = MyAgent(
+        llm_client=llm,
+        system_prompt=config.get("system_prompt", "Sos un agente muy eficiente hincha de River"),
+        max_iterations=config.get("max_iterations", 20),
+    )
+    agent.register_tool(calculadora, calculadora_schema)
+    return agent
