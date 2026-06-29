@@ -16,7 +16,17 @@ from __future__ import annotations
 from mia_agents.llm_client import LLMClient
 from student_framework.agent import MyAgent
 from student_framework.tools.calculadora import calculadora, calculadora_schema
+from student_framework.tools.lector_archivo import lector_archivo, lector_archivo_schema
+from student_framework.tools.herramienta_libre import conversor_unidades, conversor_unidades_schema
 
+__all__ = [
+    "calculadora",
+    "calculadora_schema",
+    "lector_archivo",
+    "lector_archivo_schema",
+    "conversor_unidades",
+    "conversor_unidades_schema",
+]
 
 def build_agent(config: dict | None = None) -> MyAgent:
     config = config or {}
