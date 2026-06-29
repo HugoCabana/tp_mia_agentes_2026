@@ -10,20 +10,19 @@ Los tests de conformidad en `tests/conformance/test_m1.py` y
 """
 
 from __future__ import annotations
-
+import json
 from typing import Any, Callable
-
 from mia_agents.protocols import LLMClient
-from mia_agents.types import AgentResult, ToolSchema
+from mia_agents.types import AgentResult, ToolSchema, AgentStep
 
 
 class MyAgent:
     def __init__(
         self,
         llm_client: LLMClient,
-        system_prompt: str = "Eres un asistente útil.",
-        max_iterations: int = 10,
-        max_history_messages: int = 50,
+        system_prompt: str = "Sos un agente muy eficiente hincha de River",
+        max_iterations: int = 20,
+        max_history_messages: int = 100,
     ) -> None:
         """Inicializa el agente.
 
@@ -48,14 +47,17 @@ class MyAgent:
         self._system = system_prompt
         self._max_iterations = max_iterations
         self._max_history_messages = max_history_messages
-        # TODO (M1): inicializa el estado interno para las herramientas registradas.
-        # TODO (M2): inicializa la estructura de historial conversacional.
+
+        self._tools = {}
+        self._schemas = {}
 
     def register_tool(
         self,
         tool: Callable[..., str],
         schema: ToolSchema,
     ) -> None:
+        self._tools[schema.name] = tool
+        self._schemas[schema.name] = schema
         """Registra una herramienta callable junto a su esquema.
 
         El esquema suele obtenerse con `ToolSchema.from_callable(fn)`. En
@@ -65,9 +67,78 @@ class MyAgent:
         El callable se invoca con kwargs que coinciden con la firma.
         Debe devolver una cadena.
         """
-        raise NotImplementedError("M1: implementa el registro de herramientas")
+        
 
     def run(self, user_message: str) -> AgentResult:
+        messages = [{"role": "user", "content": user_message}]
+        steps = []
+
+        for _ in range(self._max_iterations):
+            response = self._llm.chat(
+                messages=messages,
+                tools=list(self._schemas.values()),
+                system=self._system,
+            )
+
+            if not response.tool_calls:
+                return AgentResult(
+                    answer=response.content,
+                    steps=steps,
+                )
+
+            for tool_call in response.tool_calls:
+                messages.append({
+                    "role": "assistant",
+                    "content": response.content,
+                    "tool_calls": [
+                        {
+                            "id": tool_call.id,
+                            "function": {
+                                "name": tool_call.name,
+                                "arguments": tool_call.arguments,
+                            }
+                        }
+                    ]
+                })
+
+                if tool_call.name not in self._tools:
+                    step = AgentStep(
+                        tool_name=tool_call.name,
+                        tool_input=tool_call.arguments,
+                        tool_output=None,
+                        error=f"Herramienta no encontrada: {tool_call.name}",
+                    )
+                    steps.append(step)
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": tool_call.id,
+                        "content": step.error,
+                    })
+                    continue
+
+                kwargs = json.loads(tool_call.arguments)
+                tool_output = self._tools[tool_call.name](**kwargs)
+
+                step = AgentStep(
+                    tool_name=tool_call.name,
+                    tool_input=tool_call.arguments,
+                    tool_output=tool_output,
+                    error=None,
+                )
+                steps.append(step)
+
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": tool_output,
+                })
+
+        return AgentResult(
+            answer=response.content or "Se alcanzó el límite de iteraciones.",
+            steps=steps,
+        )
+
+
         """Ejecuta el bucle del agente hasta una respuesta final o hasta max_iterations.
 
         Comportamiento esperado (consulta tests/conformance/test_m1.py
