@@ -1,9 +1,11 @@
-"""Paquete propio del grupo.
+"""student_framework — Milestone 1.
 
-Implementen el agente en `agent.py` y registren sus herramientas a
-continuación, en `build_agent`. Tanto el runner de la CLI como los tests
+Paquete propio del grupo. Implementen el agente en `agent.py` y registren
+sus herramientas en `build_agent`. Tanto el runner de la CLI como los tests
 de conformidad llaman a `build_agent`, por lo que esta es la única puerta
 de entrada pública de su entrega.
+
+Único punto de entrada público: ``build_agent``.
 """
 
 from __future__ import annotations
@@ -11,33 +13,39 @@ from __future__ import annotations
 from typing import Any
 
 from mia_agents.llm_client import LLMClient
-from mia_agents.protocols import Agent
+from student_framework.agent import MyAgent
+from student_framework.tools.calculadora import calculadora, calculadora_schema
+from student_framework.tools.lector_archivo import lector_archivo, lector_archivo_schema
+from student_framework.tools.herramienta_libre import conversor_unidades, conversor_unidades_schema
 
-from .agent import MyAgent
+__all__ = ["build_agent"]
 
 
-def build_agent(config: dict[str, Any] | None = None) -> Agent:
-    """Construye y configura su agente.
+def build_agent(config: dict[str, Any] | None = None) -> MyAgent:
+    """Construye y devuelve una instancia de ``MyAgent`` lista para usar.
 
-    `config` es opcional. Si se proporciona `config["llm_client"]`, el
-    agente debe usarlo (así es como los tests de conformidad inyectan un
-    cliente mock). Si no, se construye a partir del entorno.
+    Parámetros opcionales via ``config``:
+    - ``"llm_client"``      : cliente LLM (real o mock). Si no se provee,
+                              se construye desde variables de entorno.
+    - ``"system_prompt"``   : system prompt del agente (str).
+    - ``"max_iterations"``  : límite de iteraciones del bucle (int, defecto 20).
+    - ``"max_history_messages"``: tope de mensajes en el historial (int, defecto 100).
 
-    TODO (M1): instancien su agente y llamen a `agent.register_tool(...)`
-    por cada una de sus herramientas antes de devolverlo.
+    Las tres herramientas obligatorias de M1 se registran automáticamente.
     """
+    config = config or {}
 
-    config = config or {} #NO CAMBIAR
-    llm = config.get("llm_client") or LLMClient.from_env() #NO CAMBIAR
-    kwargs: dict[str, Any] = {"llm_client": llm} #NO CAMBIAR
-    
-    if "max_history_messages" in config:
-        kwargs["max_history_messages"] = config["max_history_messages"]
+    llm = config.get("llm_client") or LLMClient.from_env()
 
-    agent = MyAgent(**kwargs)
+    agent = MyAgent(
+        llm_client=llm,
+        system_prompt=config.get("system_prompt", "Sos un agente muy eficiente hincha de River"),
+        max_iterations=config.get("max_iterations", 20),
+        max_history_messages=config.get("max_history_messages", 100),
+    )
 
-    # Ejemplo de registro (elimínenlo cuando sus herramientas estén listas):
-    # from student_framework.tools.example import reverse_string, reverse_string_schema
-    # agent.register_tool(reverse_string, reverse_string_schema)
+    agent.register_tool(calculadora, calculadora_schema)
+    agent.register_tool(lector_archivo, lector_archivo_schema)
+    agent.register_tool(conversor_unidades, conversor_unidades_schema)
 
     return agent
