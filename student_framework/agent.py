@@ -10,10 +10,13 @@ Los tests de conformidad en `tests/conformance/test_m1.py` y
 """
 
 from __future__ import annotations
+
 import json
 from typing import Any, Callable
+
 from mia_agents.protocols import LLMClient
-from mia_agents.types import AgentResult, ToolSchema, AgentStep
+from mia_agents.tool_schema import FINAL_RESULT_TOOL_NAME, final_result_tool_schema
+from mia_agents.types import AgentResult, AgentStep, ToolSchema
 
 
 class MyAgent:
@@ -24,83 +27,88 @@ class MyAgent:
         max_iterations: int = 20,
         max_history_messages: int = 100,
     ) -> None:
-        """Inicializa el agente.
-
-        Parameters
-        ----------
-        llm_client : LLMClient
-            Cliente LLM (real o mock) que el agente utilizará.
-        system_prompt : str
-            System prompt por defecto.
-        max_iterations : int
-            Tope de iteraciones del bucle del agente (M1).
-        max_history_messages : int
-            Número máximo de mensajes que se permiten en la lista
-            `messages` enviada al LLM en una única llamada. En M1 este
-            valor es ignorado; el agente sólo necesita aceptarlo en su
-            constructor. En M2 deben respetarlo: la longitud de la
-            lista de mensajes pasada a `self._llm.chat(...)` no puede
-            superar este número en ninguna llamada, sin importar la
-            estrategia de memoria que elijan.
-        """
+        """Inicializa el agente."""
         self._llm = llm_client
         self._system = system_prompt
         self._max_iterations = max_iterations
         self._max_history_messages = max_history_messages
 
-        self._tools = {}
-        self._schemas = {}
+        self._tools: dict[str, Callable[..., str]] = {}
+        self._schemas: dict[str, ToolSchema] = {}
+        self._conversation_history: list[dict[str, Any]] = []
+
+    def _trim_history(self, messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        if self._max_history_messages is None or self._max_history_messages <= 0:
+            return []
+        return messages[-self._max_history_messages :]
+
+    def _append_history(self, message: dict[str, Any]) -> None:
+        self._conversation_history.append(message)
+        self._conversation_history = self._trim_history(self._conversation_history)
 
     def register_tool(
         self,
         tool: Callable[..., str],
         schema: ToolSchema,
     ) -> None:
+        """Registra una herramienta callable junto a su esquema."""
         self._tools[schema.name] = tool
         self._schemas[schema.name] = schema
-        """Registra una herramienta callable junto a su esquema.
-
-        El esquema suele obtenerse con `ToolSchema.from_callable(fn)`. En
-        `run`, pasá `tools=list(self._schemas.values())`; el cliente LLM
-        aplica `to_llm_spec()` al llamar al proveedor.
-
-        El callable se invoca con kwargs que coinciden con la firma.
-        Debe devolver una cadena.
-        """
-        
 
     def run(self, user_message: str) -> AgentResult:
-        messages = [{"role": "user", "content": user_message}]
-        steps = []
+        self._append_history({"role": "user", "content": user_message})
+        steps: list[AgentStep] = []
+        total_input_tokens: int | None = None
+        total_output_tokens: int | None = None
 
         for _ in range(self._max_iterations):
+            messages = self._trim_history(self._conversation_history)
             response = self._llm.chat(
                 messages=messages,
                 tools=list(self._schemas.values()),
                 system=self._system,
             )
 
-            if not response.tool_calls:
-                return AgentResult(
-                    answer=response.content,
-                    steps=steps,
+            if response.input_tokens is not None:
+                total_input_tokens = (
+                    response.input_tokens
+                    if total_input_tokens is None
+                    else total_input_tokens + response.input_tokens
+                )
+            if response.output_tokens is not None:
+                total_output_tokens = (
+                    response.output_tokens
+                    if total_output_tokens is None
+                    else total_output_tokens + response.output_tokens
                 )
 
-            for tool_call in response.tool_calls:
-                messages.append({
-                    "role": "assistant",
-                    "content": response.content,
-                    "tool_calls": [
-                        {
-                            "id": tool_call.id,
-                            "function": {
-                                "name": tool_call.name,
-                                "arguments": tool_call.arguments,
-                            }
-                        }
-                    ]
-                })
+            if not response.tool_calls:
+                self._append_history({"role": "assistant", "content": response.content or ""})
+                return AgentResult(
+                    answer=response.content or "",
+                    steps=steps,
+                    input_tokens=total_input_tokens,
+                    output_tokens=total_output_tokens,
+                )
 
+            assistant_message: dict[str, Any] = {
+                "role": "assistant",
+                "content": response.content or "",
+            }
+            if response.tool_calls:
+                assistant_message["tool_calls"] = [
+                    {
+                        "id": tool_call.id,
+                        "function": {
+                            "name": tool_call.name,
+                            "arguments": tool_call.arguments,
+                        },
+                    }
+                    for tool_call in response.tool_calls
+                ]
+            self._append_history(assistant_message)
+
+            for tool_call in response.tool_calls:
                 if tool_call.name not in self._tools:
                     step = AgentStep(
                         tool_name=tool_call.name,
@@ -109,16 +117,24 @@ class MyAgent:
                         error=f"Herramienta no encontrada: {tool_call.name}",
                     )
                     steps.append(step)
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": tool_call.id,
-                        "content": step.error,
-                    })
+                    self._append_history(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": step.error or "",
+                        }
+                    )
                     continue
 
-                kwargs = json.loads(tool_call.arguments)
-                tool_output = self._tools[tool_call.name](**kwargs)
+                try:
+                    kwargs = json.loads(tool_call.arguments or "{}")
+                except json.JSONDecodeError:
+                    kwargs = {}
 
+                if not isinstance(kwargs, dict):
+                    kwargs = {}
+
+                tool_output = self._tools[tool_call.name](**kwargs)
                 step = AgentStep(
                     tool_name=tool_call.name,
                     tool_input=tool_call.arguments,
@@ -126,43 +142,20 @@ class MyAgent:
                     error=None,
                 )
                 steps.append(step)
-
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": tool_output,
-                })
+                self._append_history(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tool_call.id,
+                        "content": tool_output,
+                    }
+                )
 
         return AgentResult(
             answer=response.content or "Se alcanzó el límite de iteraciones.",
             steps=steps,
+            input_tokens=total_input_tokens,
+            output_tokens=total_output_tokens,
         )
-
-
-        """Ejecuta el bucle del agente hasta una respuesta final o hasta max_iterations.
-
-        Comportamiento esperado (consulta tests/conformance/test_m1.py
-        para el contrato exacto del M1):
-          - Llama a `self._llm.chat(..., tools=list(self._schemas.values()))`.
-          - Si la respuesta contiene tool_calls, ejecuta cada uno y vuelca
-            los resultados en la siguiente llamada al chat.
-          - Si la respuesta solo contiene texto (sin `tool_calls`),
-            devuélvelo en `AgentResult.answer`. En M1 no uses la tool
-            sintética `final_result`; ese patrón es de M2 (ver README y
-            ENUNCIADO_M2.md).
-          - Limita el bucle a `self._max_iterations` y termina de forma
-            limpia cuando se alcance.
-          - Registra cada invocación de herramienta como un `AgentStep`
-            dentro de `result.steps`.
-
-        En el M2, además, llamadas sucesivas sobre la misma instancia
-        deben continuar la conversación, y la longitud de la lista de
-        mensajes enviada al LLM no debe superar `self._max_history_messages`.
-        Acumula los tokens de entrada/salida reportados por los
-        `LLMResponse` y exponlos en `AgentResult.input_tokens` /
-        `AgentResult.output_tokens`.
-        """
-        raise NotImplementedError("M1: implementa el bucle del agente")
 
     def structured_call(
         self,
@@ -170,25 +163,63 @@ class MyAgent:
         schema: Any,
         max_repair_attempts: int = 2,
     ) -> Any:
-        """Pide al LLM una respuesta validada contra `schema` (M2).
+        """Pide al LLM una respuesta validada contra `schema` (M2)."""
+        from pydantic import ValidationError
 
-        Obligatorio: herramienta sintética `final_result` (ver
-        `mia_agents.final_result_tool_schema` / `FINAL_RESULT_TOOL_NAME`).
-        El agente ofrece esa tool al LLM, valida los `arguments` del
-        `tool_call` y reintenta con contexto de reparación si el modelo
-        responde con texto libre o con argumentos inválidos.
+        tools = [final_result_tool_schema(schema)]
+        messages: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
 
-        Implementa esto en el M2:
-          - Pasa `tools=[final_result_tool_schema(schema)]` en cada
-            llamada a `chat` dentro de este método.
-          - Termina solo cuando llega un `tool_call` a `final_result`
-            cuyos argumentos validan con `schema.model_validate(...)`.
-          - Reintenta hasta `max_repair_attempts` incluyendo el fallo en
-            los mensajes (respuesta previa, mensaje `tool`, o user de
-            reparación).
-          - Si tras los reintentos sigue fallando, levanta una excepción
-            limpia (no devuelvas valores parciales ni `None` sin avisar).
+        for attempt in range(max_repair_attempts + 1):
+            response = self._llm.chat(
+                messages=messages,
+                tools=tools,
+                system=self._system,
+            )
 
-        El M1 deja esto como stub; los tests de M2 verifican el contrato.
-        """
-        raise NotImplementedError("M2: implementa salida estructurada con reparación")
+            final_result_calls = [
+                tool_call for tool_call in response.tool_calls if tool_call.name == FINAL_RESULT_TOOL_NAME
+            ]
+            if final_result_calls:
+                tool_call = final_result_calls[0]
+                try:
+                    arguments = json.loads(tool_call.arguments or "{}")
+                    if hasattr(schema, "model_validate"):
+                        return schema.model_validate(arguments)
+                    return schema(**arguments)
+                except (json.JSONDecodeError, TypeError, ValueError, ValidationError) as exc:
+                    if attempt >= max_repair_attempts:
+                        raise RuntimeError("No se pudo obtener una respuesta estructurada válida.") from exc
+                    messages.append({"role": "assistant", "content": response.content or ""})
+                    messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": f"Argumentos inválidos: {exc}",
+                        }
+                    )
+                    messages.append(
+                        {
+                            "role": "user",
+                            "content": (
+                                "Los argumentos de final_result no validan contra el schema. "
+                                f"Reintenta con un objeto válido. Error: {exc}"
+                            ),
+                        }
+                    )
+                    continue
+
+            if attempt >= max_repair_attempts:
+                raise RuntimeError("No se pudo obtener una respuesta estructurada válida.")
+
+            messages.append({"role": "assistant", "content": response.content or ""})
+            messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        "Debes responder usando la herramienta final_result con argumentos "
+                        "que validen contra el schema proporcionado."
+                    ),
+                }
+            )
+
+        raise RuntimeError("No se pudo obtener una respuesta estructurada válida.")
