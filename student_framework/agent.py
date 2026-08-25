@@ -332,10 +332,24 @@ class MyAgent:
             output = self._tools[name](**kwargs)
         except TypeError as exc:
             # Argumentos con nombres/tipos incompatibles con la firma:
-            # recuperable — el LLM puede corregir y reintentar.
+            # recuperable — el LLM puede corregir y reintentar. Incluimos
+            # los nombres de parámetro esperados (desde el ToolSchema ya
+            # registrado) para que la corrección sea directa: un mensaje
+            # que solo dice "argumento inesperado: 'id'" sin decir cuál
+            # es el nombre correcto deja al LLM adivinando a ciegas.
+            schema = self._schemas.get(name)
+            expected = (
+                sorted((schema.parameters or {}).get("properties", {}))
+                if schema is not None
+                else []
+            )
+            if expected:
+                expected_hint = f" Parámetros esperados por '{name}': {', '.join(expected)}."
+            else:
+                expected_hint = f" '{name}' no toma ningún parámetro: invocala como {name}()."
             error = (
-                f"Llamada inválida a '{name}' con argumentos {kwargs!r}: {exc}. "
-                "Revisá los nombres y tipos de parámetros esperados por la herramienta."
+                f"Llamada inválida a '{name}' con argumentos {kwargs!r}: {exc}."
+                f"{expected_hint} Reintentá usando exactamente esos nombres de parámetro."
             )
             return None, error
         except Exception as exc:  # bug inesperado dentro de la herramienta
