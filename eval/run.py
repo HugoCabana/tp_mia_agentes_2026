@@ -97,11 +97,69 @@ def _ablation_tight_max_iterations(build_agent: Callable[..., Any]) -> Any:
     return build_agent({"max_iterations": 8})
 
 
+# El default de `MyAgent.system_prompt` ("Sos un agente muy eficiente
+# hincha de River") es un placeholder heredado de M1/M2, sin ninguna
+# referencia al dominio de sala de escape. Esta ablation mide el impacto
+# de reemplazarlo por un prompt que sí orienta la estrategia: explorar
+# antes de asumir, y no inventar ids de objetos.
+_TASK_SYSTEM_PROMPT = (
+    "Sos un agente que resuelve puzzles de sala de escape usando "
+    "herramientas de un mundo simulado. Reglas de estrategia:\n"
+    "1. Antes de asumir qué objetos existen en la sala, llamá a `look` "
+    "para ver la descripción, los items visibles y las salidas.\n"
+    "2. Usá EXACTAMENTE los ids de objeto que te devuelven las "
+    "herramientas (look/examine) — nunca inventes ids a partir del "
+    "texto de la consigna.\n"
+    "3. Si una llamada falla, leé el mensaje de error completo antes de "
+    "reintentar: indica qué corregir.\n"
+    "4. No repitas una llamada idéntica que ya falló sin cambiar algo "
+    "concreto en base al error recibido.\n"
+    "5. Si el mensaje de error lista opciones válidas (por ejemplo, "
+    "salidas disponibles), tu siguiente llamada debe usar una de esas "
+    "opciones exactas — no vuelvas a probar la opción que ya falló ni "
+    "cambies de estrategia sin usar la información que te dieron.\n"
+    "6. Tu tarea es ABRIR la puerta usando las herramientas, no explicar "
+    "cómo hacerlo. Si ya identificaste el plan (qué llave abre qué "
+    "cerradura), seguí ejecutándolo paso a paso con tool calls — no "
+    "respondas con texto libre describiendo el plan en vez de llevarlo "
+    "a cabo. Respondé en texto libre solo cuando el objetivo ya esté "
+    "cumplido o cuando estés genuinamente trabado sin ninguna acción "
+    "razonable por probar.\n"
+    "7. Ningún parámetro de estas herramientas se llama 'id': no lo "
+    "asumas nunca. Si no recordás el nombre exacto, usá el que te haya "
+    "devuelto el último mensaje de error para esa herramienta.\n"
+    "8. Para moverte a otra sala usá SIEMPRE `go` con el parámetro "
+    "`direction`, usando exactamente el texto de salida que te dio "
+    "`look` (por ejemplo, si `look` dice 'Salidas: norte.', llamá "
+    "go(direction='norte')). `look` no sirve para navegar ni toma "
+    "ningún parámetro — nunca le pases un argumento a `look`."
+)
+
+
+def _ablation_task_prompt(build_agent: Callable[..., Any]) -> Any:
+    """Ídem baseline, pero con un `system_prompt` orientado a la tarea en
+    vez del placeholder por defecto (ver `_TASK_SYSTEM_PROMPT`), y con
+    `max_iterations` más generoso (40 en vez del default 20).
+
+    El modelo local usado en el pilotaje (llama3.1:8B) muestra un sesgo
+    consistente a intentar primero un nombre de parámetro incorrecto
+    ('id') en casi todas las tool calls, y recién corregirlo en el
+    reintento — lo que ~duplica el costo real en calls de cada acción
+    respecto al óptimo. Con max_iterations=20 eso alcanza para escenarios
+    triviales pero no para 'medium' en adelante (óptimos de 7-21 calls).
+    Subir el presupuesto no tapa el problema de fondo (la eficiencia
+    sigue siendo mala y hay que reportarla), pero evita confundir "se
+    quedó sin presupuesto" con "no supo resolverlo".
+    """
+    return build_agent({"system_prompt": _TASK_SYSTEM_PROMPT, "max_iterations": 40})
+
+
 ABLATIONS: dict[str, Callable[[Callable[..., Any]], Any]] = {
     "baseline": _ablation_baseline,
     "no_m1_tools": _ablation_no_m1_tools,
     "low_history_budget": _ablation_low_history_budget,
     "tight_max_iterations": _ablation_tight_max_iterations,
+    "task_prompt": _ablation_task_prompt,
 }
 
 
