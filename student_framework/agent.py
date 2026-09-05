@@ -50,7 +50,7 @@ class MyAgent:
     def __init__(
         self,
         llm_client: LLMClient,
-        system_prompt: str = "Sos un agente muy eficiente hincha de River",
+        system_prompt: str = "Sos un agente muy eficiente",
         max_iterations: int = 20,
         max_history_messages: int = 100,
     ) -> None:

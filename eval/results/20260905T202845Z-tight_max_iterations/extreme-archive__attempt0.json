@@ -1,0 +1,188 @@
+{
+  "scenario_id": "extreme-archive",
+  "difficulty": "extreme",
+  "ablation": "tight_max_iterations",
+  "attempt": 0,
+  "user_message": "Te despiertas en el archivo central de la facultad. La puerta principal está cerrada con una cerradura institucional. La estantería frente a ti contiene veinte expedientes; cada uno parece un documento administrativo extenso y, a primera vista, indistinguible de los demás. Sospechas que solo uno guarda lo que necesitas. Encuentra la forma de salir sin perder el tiempo leyendo en vano.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Archivo central.\nUna sala alargada con olor a papel y polvo. Una estantería metálica recorre la pared norte, llena de expedientes encuadernados con tela gris e identificados solo por un número de caso. En la pared sur, la puerta principal con cerradura institucional. No hay ventanas; la luz viene de un fluorescente que zumba.\nVes:\n  - estantería del archivo [id: estanteria_archivo]\n  - puerta principal [id: puerta_principal] (cerrada)",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"estanteria_archivo\"}",
+      "tool_output": "estantería del archivo: Una estantería metálica de cinco baldas. Cada balda contiene cuatro expedientes encuadernados en tela gris, identificados con una etiqueta blanca donde solo aparece el número de caso. Son veinte expedientes en total, todos del mismo tamaño aproximado.\nContiene:\n  - expediente 1042 [id: expediente_1042]\n  - expediente 1387 [id: expediente_1387]\n  - expediente 1850 [id: expediente_1850]\n  - expediente 2104 [id: expediente_2104]\n  - expediente 2519 [id: expediente_2519]\n  - expediente 2841 [id: expediente_2841]\n  - expediente 3206 [id: expediente_3206]\n  - expediente 3478 [id: expediente_3478]\n  - expediente 3902 [id: expediente_3902]\n  - expediente 4117 [id: expediente_4117]\n  - expediente 4583 [id: expediente_4583]\n  - expediente 4860 [id: expediente_4860]\n  - expediente 5135 [id: expediente_5135]\n  - expediente 5404 [id: expediente_5404]\n  - expediente 5829 [id: expediente_5829]\n  - expediente 6201 [id: expediente_6201]\n  - expediente 6534 [id: expediente_6534]\n  - expediente 6987 [id: expediente_6987]\n  - expediente 7240 [id: expediente_7240]\n  - expediente 7615 [id: expediente_7615]",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta de madera reforzada con marco metálico. La cerradura es institucional, con un escudo en bronce y la inscripción 'Archivo Central — Llave Maestra'.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 1387, \"b\": 1042, \"operador\": \"-\"}",
+      "tool_output": "345.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 1850, \"b\": 1387, \"operador\": \"-\"}",
+      "tool_output": "463.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 2104, \"b\": 1850, \"operador\": \"-\"}",
+      "tool_output": "254.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 2519, \"b\": 2104, \"operador\": \"-\"}",
+      "tool_output": "415.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 2841, \"b\": 2519, \"operador\": \"-\"}",
+      "tool_output": "322.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 3206, \"b\": 2841, \"operador\": \"-\"}",
+      "tool_output": "365.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 3478, \"b\": 3206, \"operador\": \"-\"}",
+      "tool_output": "272.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 3902, \"b\": 3478, \"operador\": \"-\"}",
+      "tool_output": "424.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 4117, \"b\": 3902, \"operador\": \"-\"}",
+      "tool_output": "215.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 4583, \"b\": 4117, \"operador\": \"-\"}",
+      "tool_output": "466.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 4860, \"b\": 4583, \"operador\": \"-\"}",
+      "tool_output": "277.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 5135, \"b\": 4860, \"operador\": \"-\"}",
+      "tool_output": "275.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 5404, \"b\": 5135, \"operador\": \"-\"}",
+      "tool_output": "269.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 5829, \"b\": 5404, \"operador\": \"-\"}",
+      "tool_output": "425.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 6201, \"b\": 5829, \"operador\": \"-\"}",
+      "tool_output": "372.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 6534, \"b\": 6201, \"operador\": \"-\"}",
+      "tool_output": "333.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 6987, \"b\": 6534, \"operador\": \"-\"}",
+      "tool_output": "453.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 7240, \"b\": 6987, \"operador\": \"-\"}",
+      "tool_output": "253.0",
+      "error": null
+    },
+    {
+      "tool_name": "calculadora",
+      "tool_input": "{\"a\": 7615, \"b\": 7240, \"operador\": \"-\"}",
+      "tool_output": "375.0",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"expediente_3206\"}",
+      "tool_output": "expediente 3206: PROPUESTA DE ADQUISICIÓN BIBLIOGRÁFICA Nº 3206. Servicio remitente: biblioteca de humanidades. Período: primer semestre. Concepto: actualización de la colección de literatura latinoamericana del siglo XX, especialmente narrativa de la segunda mitad del siglo, donde la biblioteca presenta lagunas significativas detectadas en el último estudio de uso. La propuesta detalla noventa y dos títulos, seleccionados según los siguientes criterios: relevancia académica (presencia en bibliografías recomendadas de las asignaturas del grado y del máster), demanda no satisfecha (registros de préstamo interbibliotecario solicitados al menos tres veces en los últimos dos cursos), disponibilidad en formato impreso de calidad y, en su caso, edición crítica preferente sobre edición popular. Importe estimado, considerando descuentos editoriales habituales y costes de procesamiento técnico (catalogación, encuadernación reforzada y etiquetado RFID): nueve mil cuatrocientos veinte euros. Se propone financiar la adquisición con cargo a la partida ordinaria del servicio bibliotecario, dentro del marco anual aprobado, sin necesidad de partida extraordinaria. Plazos: si la aprobación se produce antes del 30, los ejemplares pueden estar disponibles para el siguiente cuatrimestre. La directora de la biblioteca se compromete a presentar al término del año un informe de uso de los nuevos fondos para evaluar el impacto de la inversión. Se adjunta la lista detallada de los noventa y dos títulos y la justificación bibliográfica por subcolección. ANTECEDENTES DOCUMENTALES. Para una mejor comprensión del contexto del presente expediente conviene reseñar los siguientes antecedentes que constan en el archivo institucional y que han servido para sostener la coherencia de la práctica administrativa en esta materia: existió un caso de similar naturaleza tramitado el año dos mil dieciocho, expediente 9421, cuya resolución sentó un criterio que ha venido aplicándose con carácter orientativo desde entonces; durante el curso anterior se tramitaron tres asuntos análogos, todos resueltos en sentido coherente con aquel precedente, lo que ha consolidado una línea interpretativa estable; el servicio jurídico, en informe consultivo de marzo del año en curso, confirmó la solidez de la línea interpretativa y sugirió su consolidación mediante incorporación expresa al reglamento interno cuando este se revise; por su parte, el defensor universitario ha emitido informe favorable sobre la práctica seguida, sin perjuicio de recomendar la publicación sistemática de las resoluciones en el repositorio institucional para garantizar la transparencia. Se deja constancia de estos antecedentes a efectos informativos y sin que de ellos se derive vinculación jurídica directa.",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"expediente_3206\"}",
+      "tool_output": "Error: expediente 3206 no es algo que puedas llevarte.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"expediente_9421\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'expediente_9421'.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"expediente_4860\"}",
+      "tool_output": "expediente 4860: SOLICITUD Y EVALUACIÓN DE AÑO SABÁTICO Nº 4860. Solicitante: profesor titular del departamento de Sociología Política, con quince años de antigüedad en esta universidad y sin haber disfrutado de período sabático previo. Período solicitado: curso académico completo, con inicio en septiembre del próximo año y conclusión en julio del siguiente. Destino propuesto: estancia de investigación dividida entre dos instituciones — primer semestre en el Centro de Estudios Latinoamericanos de la Universidad de Lieja (Bélgica), segundo semestre en el Instituto de Investigaciones Sociales de la Universidad Nacional Autónoma de México. Ambas instituciones acreditan invitación formal y manifiestan disponer de espacio físico y acceso a recursos. Plan de trabajo: redacción de una monografía sobre movimientos sociales transnacionales en América Latina, basada en material recopilado durante los últimos seis años pero pendiente de sistematización, con compromiso de entregar manuscrito completo en editorial al final del período. Plan de cobertura docente: la docencia del solicitante (dos asignaturas obligatorias y una optativa) será asumida temporalmente por dos profesores ayudantes doctores del mismo departamento, previo acuerdo del consejo de departamento del 5 del mes pasado. Se solicita expresamente la conservación del salario en su integridad, conforme a lo previsto en la normativa de sabáticos para casos de estancias acreditadas. La comisión evaluadora ha verificado el cumplimiento de los requisitos formales y emite informe favorable. La aprobación definitiva depende del visto bueno del rectorado, cuya respuesta se espera dentro de los próximos sesenta días. ANTECEDENTES DOCUMENTALES. Para una mejor comprensión del contexto del presente expediente conviene reseñar los siguientes antecedentes que constan en el archivo institucional y que han servido para sostener la coherencia de la práctica administrativa en esta materia: existió un caso de similar naturaleza tramitado el año dos mil dieciocho, expediente 9421, cuya resolución sentó un criterio que ha venido aplicándose con carácter orientativo desde entonces; durante el curso anterior se tramitaron tres asuntos análogos, todos resueltos en sentido coherente con aquel precedente, lo que ha consolidado una línea interpretativa estable; el servicio jurídico, en informe consultivo de marzo del año en curso, confirmó la solidez de la línea interpretativa y sugirió su consolidación mediante incorporación expresa al reglamento interno cuando este se revise; por su parte, el defensor universitario ha emitido informe favorable sobre la práctica seguida, sin perjuicio de recomendar la publicación sistemática de las resoluciones en el repositorio institucional para garantizar la transparencia. Se deja constancia de estos antecedentes a efectos informativos y sin que de ellos se derive vinculación jurídica directa.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"expediente_1042\"}",
+      "tool_output": "expediente 1042: RESOLUCIÓN DISCIPLINARIA Nº 1042/curso anterior. Estimado decanato: en respuesta a la denuncia presentada por la profesora doña Marta Hidalgo Cebrián el día 12 de noviembre, esta comisión disciplinaria ha procedido al examen del caso del estudiante con número de matrícula 80214, matriculado en el segundo curso de Filología Hispánica. Tras revisar las pruebas aportadas — copia del trabajo de fin de cuatrimestre, contraste con dos fuentes externas localizadas en repositorios académicos abiertos, e informe del programa institucional de detección de plagio — la comisión concluye por unanimidad que existe coincidencia textual no atribuida en un 34% del trabajo, superior al umbral del 15% que esta universidad considera tolerable como cita defectuosa. El estudiante alegó, en audiencia celebrada el 28 de noviembre, que la similitud se debía a la consulta de notas tomadas durante una asignatura previa cuyos materiales habrían sido compartidos por el propio docente. Esta línea de defensa no se ha podido verificar porque el docente referido se encontraba de baja médica en el momento de la consulta y los materiales no constan en el repositorio institucional. La comisión, por tanto, propone como sanción: suspensión de la convocatoria ordinaria de la asignatura afectada, obligación de cursar el taller de buenas prácticas académicas (ocho sesiones, vespertinas) durante el siguiente cuatrimestre, y anotación reservada en el expediente que se cancelará automáticamente a los tres años si no se reincidiera. La presente resolución es susceptible de recurso ante el rectorado en el plazo de quince días naturales. Firmado: presidenta de la comisión, secretaria y vocal externo. ANEXO PROCEDIMENTAL. A los efectos de la aplicación de la presente resolución se aclaran los siguientes extremos conforme al reglamento interno aprobado en consejo de gobierno del 14 de marzo y a la normativa supletoria que pueda resultar aplicable: los plazos se computarán por días naturales salvo mención expresa en contrario, tomándose como referencia la fecha de notificación efectiva mediante medio acreditado y no la de emisión del documento; los recursos administrativos que procedan se presentarán ante el órgano superior jerárquico (rectorado) conforme al procedimiento general previsto en el reglamento de procedimiento administrativo institucional, con expresa observancia del principio de doble instancia; la suspensión cautelar de la ejecución solo podrá acordarse mediante auto motivado en aquellos supuestos en que la ejecución cause perjuicios de imposible o difícil reparación o cuando los motivos de fondo aparezcan como sólidos a juicio del instructor del recurso, conforme a los criterios establecidos en la doctrina interna del servicio jurídico. Quedan a salvo las acciones jurisdiccionales que la parte interesada considere oportuno ejercitar ante los tribunales ordinarios competentes en la materia, sin que la pendencia del recurso administrativo prejuzgue su admisibilidad. Se notifica a los efectos correspondientes.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"expediente_7615\"}",
+      "tool_output": "expediente 7615: POLÍTICA DE RECONOCIMIENTO A DONANTES INSTITUCIONALES Nº 7615. Marco general: la presente política regula los criterios mediante los cuales esta universidad reconoce públicamente las donaciones recibidas por personas físicas o jurídicas, ya sea en concepto de mecenazgo, patrocinio finalista o becas dotadas. La política responde a la doble necesidad de mantener la transparencia institucional y de incentivar la cultura de la donación en un entorno donde las fuentes de financiación complementaria se han diversificado. Tramos de reconocimiento: donaciones inferiores a cinco mil euros recibirán reconocimiento privado mediante carta firmada por el rectorado y mención en la memoria anual; donaciones entre cinco mil y veinticinco mil euros recibirán adicionalmente mención en la página web institucional dentro de la sección de mecenazgo; donaciones entre veinticinco mil y cien mil euros podrán optar a la dedicación temporal de un espacio físico, aula u otro elemento con el nombre del donante, durante el período acordado y previa firma del convenio correspondiente; donaciones superiores a cien mil euros, en el caso de cumplir los criterios de finalidad académica establecidos, podrán optar a denominaciones permanentes de cátedras, programas o becas. Procedimiento: cualquier propuesta de reconocimiento por encima de los cinco mil euros requiere informe favorable de la comisión de mecenazgo y aprobación del consejo de gobierno. Quedan excluidos del marco de reconocimiento los donantes cuya actividad principal o reputacional pueda comprometer los valores institucionales, según evaluación caso por caso de la propia comisión. OBSERVACIONES PARTICULARES DEL ÓRGANO INSTRUCTOR. Más allá de la parte dispositiva, el órgano instructor estima oportuno consignar las siguientes observaciones a título de orientación general, sin que constituyan parte vinculante de la resolución y a fin de facilitar la valoración futura de casos análogos: se ha observado durante la tramitación del presente expediente que algunos extremos podrían beneficiarse de una clarificación normativa interna, en concreto en lo relativo a los plazos de presentación de pruebas y a los criterios de baremación aplicables, materias en las cuales el reglamento vigente admite cierta indeterminación que dificulta la práctica administrativa; se sugiere, asimismo, que la formación periódica del personal técnico que tramita este tipo de expedientes incorpore módulos específicos sobre los aspectos más controvertidos, dada la complejidad creciente de la casuística; se hace notar, por último, que ciertos procedimientos colaterales podrían beneficiarse de una revisión integral en el plazo de los próximos tres ejercicios, sin que ello deba interpretarse como crítica al sistema actual sino como contribución constructiva al perfeccionamiento de la práctica administrativa.",
+      "error": null
+    }
+  ],
+  "final_answer": "¡El **expediente 9421** aparece mencionado en TODOS los expedientes como antecedente común! Eso significa que es una plantilla boilerplate — no es una pista exclusiva. Necesito otro enfoque. Voy a examinar el **primer y último** expediente, que podrían ser los más inusuales por su posición extrema en la estantería.",
+  "input_tokens": 53891,
+  "output_tokens": 2897,
+  "latency_s": 47.727945000002364,
+  "error": null
+}

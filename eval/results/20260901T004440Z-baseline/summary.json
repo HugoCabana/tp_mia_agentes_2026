@@ -1,0 +1,201 @@
+{
+  "overall": {
+    "n": 8,
+    "success_rate": 0.125,
+    "mean_efficiency_ratio": 1.4270521145521147,
+    "mean_latency_s": 51.32210147387559,
+    "mean_input_tokens": 25701.25,
+    "mean_output_tokens": 605.125,
+    "error_counts": {
+      "sin_error": 70,
+      "herramienta_inexistente": 0,
+      "argumentos_invalidos": 0,
+      "regla_del_mundo": 23,
+      "bug_inesperado": 0
+    }
+  },
+  "by_difficulty": {
+    "easy": {
+      "n": 1,
+      "success_rate": 1.0,
+      "mean_efficiency_ratio": 1.3333333333333333,
+      "mean_latency_s": 23.774446333001833,
+      "mean_input_tokens": 6375.0,
+      "mean_output_tokens": 192.0,
+      "error_counts": {
+        "sin_error": 4,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 0,
+        "bug_inesperado": 0
+      }
+    },
+    "extreme": {
+      "n": 3,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 0.8968253968253969,
+      "mean_latency_s": 46.823269278000225,
+      "mean_input_tokens": 21381.0,
+      "mean_output_tokens": 488.3333333333333,
+      "error_counts": {
+        "sin_error": 24,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 5,
+        "bug_inesperado": 0
+      }
+    },
+    "hard": {
+      "n": 2,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 1.8131868131868132,
+      "mean_latency_s": 89.7369153744985,
+      "mean_input_tokens": 39947.0,
+      "mean_output_tokens": 1169.5,
+      "error_counts": {
+        "sin_error": 19,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 11,
+        "bug_inesperado": 0
+      }
+    },
+    "medium": {
+      "n": 2,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 1.8831168831168832,
+      "mean_latency_s": 33.429363437502616,
+      "mean_input_tokens": 27599.0,
+      "mean_output_tokens": 422.5,
+      "error_counts": {
+        "sin_error": 23,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 7,
+        "bug_inesperado": 0
+      }
+    }
+  },
+  "by_scenario": {
+    "apartment-keys": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 2.857142857142857,
+      "mean_latency_s": 32.20836675000464,
+      "mean_input_tokens": 37044.0,
+      "mean_output_tokens": 370.0,
+      "error_counts": {
+        "sin_error": 15,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 5,
+        "bug_inesperado": 0
+      }
+    },
+    "backtracking-vault": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 0.6666666666666666,
+      "mean_latency_s": 52.436073042001226,
+      "mean_input_tokens": 23096.0,
+      "mean_output_tokens": 661.0,
+      "error_counts": {
+        "sin_error": 8,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 4,
+        "bug_inesperado": 0
+      }
+    },
+    "color-locks": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 0.9090909090909091,
+      "mean_latency_s": 34.65036012500059,
+      "mean_input_tokens": 18154.0,
+      "mean_output_tokens": 475.0,
+      "error_counts": {
+        "sin_error": 8,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 2,
+        "bug_inesperado": 0
+      }
+    },
+    "extreme-archive": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 1.5,
+      "mean_latency_s": 48.749395124999864,
+      "mean_input_tokens": 19558.0,
+      "mean_output_tokens": 348.0,
+      "error_counts": {
+        "sin_error": 6,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 0,
+        "bug_inesperado": 0
+      }
+    },
+    "library-search": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 2.857142857142857,
+      "mean_latency_s": 152.9846080829957,
+      "mean_input_tokens": 61959.0,
+      "mean_output_tokens": 2011.0,
+      "error_counts": {
+        "sin_error": 13,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 7,
+        "bug_inesperado": 0
+      }
+    },
+    "office-sequence": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 0.7692307692307693,
+      "mean_latency_s": 26.489222666001297,
+      "mean_input_tokens": 17935.0,
+      "mean_output_tokens": 328.0,
+      "error_counts": {
+        "sin_error": 6,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 4,
+        "bug_inesperado": 0
+      }
+    },
+    "study-with-key": {
+      "n": 1,
+      "success_rate": 1.0,
+      "mean_efficiency_ratio": 1.3333333333333333,
+      "mean_latency_s": 23.774446333001833,
+      "mean_input_tokens": 6375.0,
+      "mean_output_tokens": 192.0,
+      "error_counts": {
+        "sin_error": 4,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 0,
+        "bug_inesperado": 0
+      }
+    },
+    "vault-combination": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 0.5238095238095238,
+      "mean_latency_s": 39.284339666999585,
+      "mean_input_tokens": 21489.0,
+      "mean_output_tokens": 456.0,
+      "error_counts": {
+        "sin_error": 10,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 1,
+        "bug_inesperado": 0
+      }
+    }
+  }
+}

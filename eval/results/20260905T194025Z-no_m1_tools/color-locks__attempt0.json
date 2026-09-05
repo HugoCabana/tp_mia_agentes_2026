@@ -1,0 +1,19 @@
+{
+  "scenario_id": "color-locks",
+  "difficulty": "medium",
+  "ablation": "no_m1_tools",
+  "attempt": 0,
+  "user_message": "Te despiertas en un sótano frío. La puerta principal, al fondo, está cerrada con una cerradura dorada considerable. Sobre una repisa baja brilla una llave plateada. Repartidos por el suelo hay cuatro cofres pintados de colores distintos (plateado, rojo, verde y azul), cada uno con su cerradura del mismo color. Algunos cofres están cerrados con llave, otros no. Encuentra la forma de salir.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [],
+  "final_answer": "No se pudo completar la solicitud: el cliente LLM falló de forma persistente tras varios reintentos (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CekrsP3xyFMY38MRoqhrb'}).",
+  "input_tokens": null,
+  "output_tokens": null,
+  "latency_s": 0.95124929099984,
+  "error": "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CekrsP3xyFMY38MRoqhrb'}"
+}

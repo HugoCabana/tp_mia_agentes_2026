@@ -1,0 +1,51 @@
+{
+  "overall": {
+    "n": 1,
+    "success_rate": 0.0,
+    "mean_efficiency_ratio": 8.0,
+    "mean_latency_s": 59.51243099999556,
+    "mean_input_tokens": 14923.0,
+    "mean_output_tokens": 795.0,
+    "error_counts": {
+      "sin_error": 2,
+      "herramienta_inexistente": 0,
+      "argumentos_invalidos": 0,
+      "regla_del_mundo": 22,
+      "bug_inesperado": 0
+    }
+  },
+  "by_difficulty": {
+    "easy": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 8.0,
+      "mean_latency_s": 59.51243099999556,
+      "mean_input_tokens": 14923.0,
+      "mean_output_tokens": 795.0,
+      "error_counts": {
+        "sin_error": 2,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 22,
+        "bug_inesperado": 0
+      }
+    }
+  },
+  "by_scenario": {
+    "study-with-key": {
+      "n": 1,
+      "success_rate": 0.0,
+      "mean_efficiency_ratio": 8.0,
+      "mean_latency_s": 59.51243099999556,
+      "mean_input_tokens": 14923.0,
+      "mean_output_tokens": 795.0,
+      "error_counts": {
+        "sin_error": 2,
+        "herramienta_inexistente": 0,
+        "argumentos_invalidos": 0,
+        "regla_del_mundo": 22,
+        "bug_inesperado": 0
+      }
+    }
+  }
+}

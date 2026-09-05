@@ -1,0 +1,26 @@
+{
+  "scenario_id": "extreme-archive",
+  "difficulty": "extreme",
+  "ablation": "baseline",
+  "attempt": 0,
+  "user_message": "Te despiertas en el archivo central de la facultad. La puerta principal está cerrada con una cerradura institucional. La estantería frente a ti contiene veinte expedientes; cada uno parece un documento administrativo extenso y, a primera vista, indistinguible de los demás. Sospechas que solo uno guarda lo que necesitas. Encuentra la forma de salir sin perder el tiempo leyendo en vano.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"estantería\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'estantería'.",
+      "error": null
+    }
+  ],
+  "final_answer": "{\"name\": \"look\"}",
+  "input_tokens": 1565,
+  "output_tokens": 26,
+  "latency_s": 3.622432625001238,
+  "error": null
+}
