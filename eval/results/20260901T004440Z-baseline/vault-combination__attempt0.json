@@ -1,0 +1,86 @@
+{
+  "scenario_id": "vault-combination",
+  "difficulty": "extreme",
+  "ablation": "baseline",
+  "attempt": 0,
+  "user_message": "Te despiertas en el vestíbulo de una instalación. La puerta principal no tiene cerradura común: es un panel con tres ranuras etiquetadas para 'núcleos de energía'. No hay ningún núcleo a la vista aquí. Un pasillo lleva al resto de la instalación. Tendrás que encontrar los tres núcleos —están en salas distintas— y traerlos al panel. Algunas puertas y vitrinas están cerradas y sus llaves no están donde las necesitás.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Vestíbulo.\nUn vestíbulo de hormigón con un panel de seguridad junto a la puerta principal. El panel tiene tres ranuras vacías rotuladas 'NÚCLEO'. Un pasillo se abre al norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta blindada controlada por un panel de tres ranuras. Solo abre cuando se colocan los tres núcleos de energía.\nEstado: cerrada.\nRequiere 3 piezas en total; faltan: núcleo rojo, núcleo azul, núcleo verde.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Galería central.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Galería central.\nUna galería que distribuye hacia varias salas: el taller al este, la biblioteca al oeste y, al norte, una puerta metálica de depósito que está cerrada.\nVes:\n  - puerta del depósito [id: puerta_deposito] (cerrada)\nSalidas: este, norte (bloqueada por puerta del depósito), oeste, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_deposito\"}",
+      "tool_output": "puerta del depósito: Una puerta metálica con una cerradura robusta. Cerrada.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_del_deposito\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'puerta_del_deposito'.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Galería central.\nUna galería que distribuye hacia varias salas: el taller al este, la biblioteca al oeste y, al norte, una puerta metálica de depósito que está cerrada.\nVes:\n  - puerta del depósito [id: puerta_deposito] (cerrada)\nSalidas: este, norte (bloqueada por puerta del depósito), oeste, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_deposito\"}",
+      "tool_output": "puerta del depósito: Una puerta metálica con una cerradura robusta. Cerrada.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_deposito\"}",
+      "tool_output": "puerta del depósito: Una puerta metálica con una cerradura robusta. Cerrada.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Galería central.\nUna galería que distribuye hacia varias salas: el taller al este, la biblioteca al oeste y, al norte, una puerta metálica de depósito que está cerrada.\nVes:\n  - puerta del depósito [id: puerta_deposito] (cerrada)\nSalidas: este, norte (bloqueada por puerta del depósito), oeste, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_deposito\"}",
+      "tool_output": "puerta del depósito: Una puerta metálica con una cerradura robusta. Cerrada.\nEstado: cerrada.",
+      "error": null
+    }
+  ],
+  "final_answer": "La puerta del depósito no tiene nada visible que podamos usar directamente. Vamos a explorar las otras salas disponibles desde la galería central: el taller al este y la biblioteca al oeste.\n\nPrimero, vamos al taller al este.",
+  "input_tokens": 21489,
+  "output_tokens": 456,
+  "latency_s": 39.284339666999585,
+  "error": null
+}

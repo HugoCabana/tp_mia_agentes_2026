@@ -1,0 +1,92 @@
+{
+  "scenario_id": "apartment-keys",
+  "difficulty": "medium",
+  "ablation": "no_m1_tools",
+  "attempt": 0,
+  "user_message": "Te despiertas en el recibidor de un apartamento desconocido. La puerta principal está cerrada con llave y no la ves por ningún lado. Hay un pasillo que se interna en el apartamento. Explora los ambientes, encuentra la llave y vuelve a abrir la puerta principal.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": true,
+  "goal_reason": "puerta principal está abierta",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Recibidor.\nUn recibidor estrecho con un perchero vacío y un espejo polvoriento. La puerta principal, de metal, está cerrada con una cerradura simple. Un pasillo se abre hacia el norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta de metal con una cerradura simple. Necesita una llave para abrirse.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Pasillo.\nUn pasillo en penumbra con cuadros torcidos. Conecta el recibidor al sur con la cocina al este.\nNo ves nada de interés.\nSalidas: este, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"cuadros\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'cuadros'.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"este\"}",
+      "tool_output": "Caminas hacia este. Llegas a Cocina.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Cocina.\nUna cocina pequeña con azulejos blancos. Hay una mesada con un cajón cerrado y olor a café frío.\nVes:\n  - cajón de la cocina [id: cajon]\nSalidas: oeste.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"cajon\"}",
+      "tool_output": "cajón de la cocina: Un cajón de madera bajo la mesada. Se abre con un tirón y dentro hay cubiertos sueltos y algo más.\nContiene:\n  - llave dorada [id: llave_oro]",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"llave_oro\"}",
+      "tool_output": "Tomas llave dorada.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"oeste\"}",
+      "tool_output": "Caminas hacia oeste. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"sur\"}",
+      "tool_output": "Caminas hacia sur. Llegas a Recibidor.",
+      "error": null
+    },
+    {
+      "tool_name": "use",
+      "tool_input": "{\"item\": \"llave_oro\", \"target\": \"puerta_principal\"}",
+      "tool_output": "Usas llave dorada con puerta principal. Se abre.",
+      "error": null
+    }
+  ],
+  "final_answer": "---\n\n## 🏆 ¡Sala escapada con éxito!\n\nAquí el resumen del recorrido:\n\n| Paso | Acción | Resultado |\n|------|--------|-----------|\n| 1 | Observé el **recibidor** | Encontré la puerta cerrada y el pasillo norte |\n| 2 | Fui al **pasillo** | Sin objetos útiles, seguí al este |\n| 3 | Entré a la **cocina** | Encontré un cajón sospechoso |\n| 4 | Examiné el **cajón** | Dentro había una 🗝️ llave dorada |\n| 5 | Tomé la **llave dorada** | Añadida al inventario |\n| 6 | Regresé al **recibidor** | Pasillo → sur |\n| 7 | Usé la **llave dorada** en la puerta | ¡Puerta abierta! ✅ |\n\n¡La llave estaba escondida entre los cubiertos de la cocina todo el tiempo! 🚪✨",
+  "input_tokens": 25498,
+  "output_tokens": 1121,
+  "latency_s": 36.59882570800255,
+  "error": null
+}

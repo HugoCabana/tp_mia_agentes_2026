@@ -59,21 +59,24 @@ def _ablation_baseline(build_agent: Callable[..., Any]) -> Any:
 
 
 def _ablation_no_m1_tools(build_agent: Callable[..., Any]) -> Any:
-    """Ídem baseline, pero sin las 3 tools de M1 registradas (calculadora,
-    lector_archivo, conversor_unidades) — solo quedarán las del mundo.
-
-    `build_agent()` las registra internamente sin exponer un flag para
-    desactivarlas, así que construimos `MyAgent` directamente en vez de
-    pasar por `build_agent`. Mide si esas herramientas "de ruido" (fuera
-    de contexto para una sala de escape) le cuestan calls o confusión al
-    agente frente a tenerlas disponibles sin necesidad.
-    """
-    from mia_agents.llm_client import LLMClient
+    import os
     from student_framework.agent import MyAgent
+    from student_framework.anthropic_provider import AnthropicClient
+    from mia_agents.llm_client import LLMClient
+
+    llm = AnthropicClient() if os.environ.get("ANTHROPIC_API_KEY") else LLMClient.from_env()
 
     return MyAgent(
-        llm_client=LLMClient.from_env(),
-        system_prompt="Sos un agente muy eficiente hincha de River",
+        llm_client=llm,
+        system_prompt=(
+            "Sos un agente que resuelve salas de escape usando herramientas. "
+            "Reglas estrictas: "
+            "1. Siempre empezá con 'look' para ver los objetos y sus ids exactos. "
+            "2. Usá 'examine <id>' con el id exacto que viste en 'look' para inspeccionar cada objeto. "
+            "3. Usá 'take <id>' con el id exacto del objeto que querés agarrar. "
+            "4. Usá 'use <id_item> <id_target>' para usar un objeto del inventario sobre otro. "
+            "NUNCA inventes ids — solo usá los que aparecen en las respuestas de las herramientas."
+        ),
         max_iterations=20,
         max_history_messages=100,
     )

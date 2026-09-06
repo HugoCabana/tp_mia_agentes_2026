@@ -1,0 +1,140 @@
+{
+  "scenario_id": "apartment-keys",
+  "difficulty": "medium",
+  "ablation": "baseline",
+  "attempt": 0,
+  "user_message": "Te despiertas en el recibidor de un apartamento desconocido. La puerta principal está cerrada con llave y no la ves por ningún lado. Hay un pasillo que se interna en el apartamento. Explora los ambientes, encuentra la llave y vuelve a abrir la puerta principal.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Recibidor.\nUn recibidor estrecho con un perchero vacío y un espejo polvoriento. La puerta principal, de metal, está cerrada con una cerradura simple. Un pasillo se abre hacia el norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Pasillo.\nUn pasillo en penumbra con cuadros torcidos. Conecta el recibidor al sur con la cocina al este.\nNo ves nada de interés.\nSalidas: este, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"sur\"}",
+      "tool_output": "Caminas hacia sur. Llegas a Recibidor.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"este\"}",
+      "tool_output": "Error: no hay salida 'este' desde aquí. Salidas disponibles: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Pasillo.\nUn pasillo en penumbra con cuadros torcidos. Conecta el recibidor al sur con la cocina al este.\nNo ves nada de interés.\nSalidas: este, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"sur\"}",
+      "tool_output": "Caminas hacia sur. Llegas a Recibidor.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta de metal con una cerradura simple. Necesita una llave para abrirse.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "use",
+      "tool_input": "{\"item\": \"llave\", \"target\": \"puerta_principal\"}",
+      "tool_output": "Error: no llevas ningún 'llave'.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Recibidor.\nUn recibidor estrecho con un perchero vacío y un espejo polvoriento. La puerta principal, de metal, está cerrada con una cerradura simple. Un pasillo se abre hacia el norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Pasillo.\nUn pasillo en penumbra con cuadros torcidos. Conecta el recibidor al sur con la cocina al este.\nNo ves nada de interés.\nSalidas: este, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"sur\"}",
+      "tool_output": "Caminas hacia sur. Llegas a Recibidor.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"perchero\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'perchero'.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta de metal con una cerradura simple. Necesita una llave para abrirse.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"puerta_principal\"}",
+      "tool_output": "Error: puerta principal no es algo que puedas llevarte.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Recibidor.\nUn recibidor estrecho con un perchero vacío y un espejo polvoriento. La puerta principal, de metal, está cerrada con una cerradura simple. Un pasillo se abre hacia el norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"espejo\"}",
+      "tool_output": "Error: no existe ningún objeto con id 'espejo'.",
+      "error": null
+    }
+  ],
+  "final_answer": "Se alcanzó el límite de iteraciones sin una respuesta final.",
+  "input_tokens": 37044,
+  "output_tokens": 370,
+  "latency_s": 32.20836675000464,
+  "error": null
+}

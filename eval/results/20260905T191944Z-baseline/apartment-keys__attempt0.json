@@ -1,0 +1,80 @@
+{
+  "scenario_id": "apartment-keys",
+  "difficulty": "medium",
+  "ablation": "baseline",
+  "attempt": 0,
+  "user_message": "Te despiertas en el recibidor de un apartamento desconocido. La puerta principal está cerrada con llave y no la ves por ningún lado. Hay un pasillo que se interna en el apartamento. Explora los ambientes, encuentra la llave y vuelve a abrir la puerta principal.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": true,
+  "goal_reason": "puerta principal está abierta",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Recibidor.\nUn recibidor estrecho con un perchero vacío y un espejo polvoriento. La puerta principal, de metal, está cerrada con una cerradura simple. Un pasillo se abre hacia el norte.\nVes:\n  - puerta principal [id: puerta_principal] (cerrada)\nSalidas: norte.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Pasillo.\nUn pasillo en penumbra con cuadros torcidos. Conecta el recibidor al sur con la cocina al este.\nNo ves nada de interés.\nSalidas: este, sur.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"este\"}",
+      "tool_output": "Caminas hacia este. Llegas a Cocina.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Cocina.\nUna cocina pequeña con azulejos blancos. Hay una mesada con un cajón cerrado y olor a café frío.\nVes:\n  - cajón de la cocina [id: cajon]\nSalidas: oeste.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"cajon\"}",
+      "tool_output": "cajón de la cocina: Un cajón de madera bajo la mesada. Se abre con un tirón y dentro hay cubiertos sueltos y algo más.\nContiene:\n  - llave dorada [id: llave_oro]",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"llave_oro\"}",
+      "tool_output": "Tomas llave dorada.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"oeste\"}",
+      "tool_output": "Caminas hacia oeste. Llegas a Pasillo.",
+      "error": null
+    },
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"sur\"}",
+      "tool_output": "Caminas hacia sur. Llegas a Recibidor.",
+      "error": null
+    },
+    {
+      "tool_name": "use",
+      "tool_input": "{\"item\": \"llave_oro\", \"target\": \"puerta_principal\"}",
+      "tool_output": "Usas llave dorada con puerta principal. Se abre.",
+      "error": null
+    }
+  ],
+  "final_answer": "## 🎉 ¡Escapamos!\n\nAquí está el resumen de la aventura:\n\n| Paso | Acción |\n|------|--------|\n| 1️⃣ | Inspeccioné el **recibidor** → solo la puerta principal cerrada |\n| 2️⃣ | Avancé por el **pasillo** hacia el norte |\n| 3️⃣ | Entré a la **cocina** al este |\n| 4️⃣ | Examiné el **cajón de la cocina** → encontré la 🗝️ llave dorada |\n| 5️⃣ | Tomé la llave y volví al recibidor |\n| 6️⃣ | Usé la **llave dorada** en la **puerta principal** → ¡abierta! |\n\nLa clave estuvo en registrar metódicamente cada habitación y examinar todos los objetos encontrados. ¡Libertad! 🚪✨",
+  "input_tokens": 29358,
+  "output_tokens": 969,
+  "latency_s": 30.607521000001725,
+  "error": null
+}

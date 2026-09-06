@@ -1,0 +1,116 @@
+{
+  "scenario_id": "study-with-key",
+  "difficulty": "easy",
+  "ablation": "low_history_budget",
+  "attempt": 1,
+  "user_message": "Te despiertas encerrado en un pequeño estudio. La puerta está cerrada. Encuentra la forma de salir. Usa las herramientas que tienes disponibles para explorar la sala y resolver el puzzle.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": true,
+  "goal_reason": "puerta principal está abierta",
+  "steps": [
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Estudio.\nUn estudio pequeño forrado de libros. Una alfombra persa cubre el centro del suelo. A un lado hay un escritorio de roble. Al fondo, la puerta principal.\nVes:\n  - alfombra [id: alfombra]\n  - escritorio [id: escritorio]\n  - puerta principal [id: puerta_principal] (cerrada)",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"alfombra\"}",
+      "tool_output": "alfombra: Una vieja alfombra persa. Algo abulta debajo.\nContiene:\n  - llave dorada [id: llave_oro]",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"escritorio\"}",
+      "tool_output": "escritorio: Un escritorio de roble con dos cajones. Ambos están abiertos y vacíos.\nEstá vacío.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"puerta_principal\"}",
+      "tool_output": "puerta principal: Una puerta robusta de roble. La cerradura es dorada y parece reciente.\nEstado: cerrada.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Estudio.\nUn estudio pequeño forrado de libros. Una alfombra persa cubre el centro del suelo. A un lado hay un escritorio de roble. Al fondo, la puerta principal.\nVes:\n  - alfombra [id: alfombra]\n  - escritorio [id: escritorio]\n  - puerta principal [id: puerta_principal] (cerrada)\n  - llave dorada [id: llave_oro]",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"alfombra\"}",
+      "tool_output": "alfombra: Una vieja alfombra persa. Algo abulta debajo.\nContiene:\n  - llave dorada [id: llave_oro]",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"llave_oro\"}",
+      "tool_output": "llave dorada: Una llave dorada, pesada al tacto.",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"llave_oro\"}",
+      "tool_output": "Tomas llave dorada.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Estudio.\nUn estudio pequeño forrado de libros. Una alfombra persa cubre el centro del suelo. A un lado hay un escritorio de roble. Al fondo, la puerta principal.\nVes:\n  - alfombra [id: alfombra]\n  - escritorio [id: escritorio]\n  - puerta principal [id: puerta_principal] (cerrada)\nLlevas: llave dorada [id: llave_oro].",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"alfombra\"}",
+      "tool_output": "alfombra: Una vieja alfombra persa. Algo abulta debajo.\nEstá vacío.",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"escritorio\"}",
+      "tool_output": "escritorio: Un escritorio de roble con dos cajones. Ambos están abiertos y vacíos.\nEstá vacío.",
+      "error": null
+    },
+    {
+      "tool_name": "take",
+      "tool_input": "{\"item\": \"alfombra\"}",
+      "tool_output": "Error: alfombra no es algo que puedas llevarte.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Estudio.\nUn estudio pequeño forrado de libros. Una alfombra persa cubre el centro del suelo. A un lado hay un escritorio de roble. Al fondo, la puerta principal.\nVes:\n  - alfombra [id: alfombra]\n  - escritorio [id: escritorio]\n  - puerta principal [id: puerta_principal] (cerrada)\nLlevas: llave dorada [id: llave_oro].",
+      "error": null
+    },
+    {
+      "tool_name": "examine",
+      "tool_input": "{\"target\": \"alfombra\"}",
+      "tool_output": "alfombra: Una vieja alfombra persa. Algo abulta debajo.\nEstá vacío.",
+      "error": null
+    },
+    {
+      "tool_name": "use",
+      "tool_input": "{\"item\": \"llave_oro\", \"target\": \"puerta_principal\"}",
+      "tool_output": "Usas llave dorada con puerta principal. Se abre.",
+      "error": null
+    },
+    {
+      "tool_name": "look",
+      "tool_input": "{}",
+      "tool_output": "Estás en Estudio.\nUn estudio pequeño forrado de libros. Una alfombra persa cubre el centro del suelo. A un lado hay un escritorio de roble. Al fondo, la puerta principal.\nVes:\n  - alfombra [id: alfombra]\n  - escritorio [id: escritorio]\n  - puerta principal [id: puerta_principal] (abierta)\nLlevas: llave dorada [id: llave_oro].",
+      "error": null
+    }
+  ],
+  "final_answer": "La puerta está abierta. ¡Hemos resuelto la sala de escape! 🎉\n\n---\n\n## 📋 Resumen de la solución\n\n| Paso | Acción | Resultado |\n|------|--------|-----------|\n| 1 | `look` | Observé la sala: alfombra, escritorio, puerta principal |\n| 2 | `examine alfombra` | Inspeccioné la alfombra (algo abulta debajo) |\n| 3 | `use llave_oro → puerta_principal` | Usé la llave dorada en la puerta principal |\n| ✅ | **Puerta abierta** | **¡Sala resuelta!** |\n\nLa clave fue usar la **llave dorada** directamente sobre la **puerta principal**, que era el objetivo final de la sala. ¿Querés que exploremos lo que hay más allá, o hay otro desafío esperando?",
+  "input_tokens": 25359,
+  "output_tokens": 1450,
+  "latency_s": 34.81113804099732,
+  "error": null
+}

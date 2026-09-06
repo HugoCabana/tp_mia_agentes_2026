@@ -1,0 +1,26 @@
+{
+  "scenario_id": "backtracking-vault",
+  "difficulty": "extreme",
+  "ablation": "baseline",
+  "attempt": 0,
+  "user_message": "Te despiertas en la entrada de una bóveda. La puerta principal de salida tiene una cerradura que pide una 'llave maestra'. En la misma sala hay un cofre antiguo cerrado: sospechás que la llave maestra está dentro, pero el cofre necesita una llave oxidada que no está aquí. Hacia el norte se abre una sucesión de salas con puertas cerradas. Vas a tener que internarte hasta el fondo para conseguir lo que abre el cofre del principio, y después volver.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [
+    {
+      "tool_name": "go",
+      "tool_input": "{\"direction\": \"norte\"}",
+      "tool_output": "Caminas hacia norte. Llegas a Sala A.",
+      "error": null
+    }
+  ],
+  "final_answer": "{\"name\": \"look\"}",
+  "input_tokens": 1704,
+  "output_tokens": 24,
+  "latency_s": 3.8279546669946285,
+  "error": null
+}

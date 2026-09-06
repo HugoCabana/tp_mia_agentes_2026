@@ -1,0 +1,19 @@
+{
+  "scenario_id": "extreme-archive",
+  "difficulty": "extreme",
+  "ablation": "no_m1_tools",
+  "attempt": 1,
+  "user_message": "Te despiertas en el archivo central de la facultad. La puerta principal está cerrada con una cerradura institucional. La estantería frente a ti contiene veinte expedientes; cada uno parece un documento administrativo extenso y, a primera vista, indistinguible de los demás. Sospechas que solo uno guarda lo que necesitas. Encuentra la forma de salir sin perder el tiempo leyendo en vano.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [],
+  "final_answer": "No se pudo completar la solicitud: el cliente LLM falló de forma persistente tras varios reintentos (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CekrnLW2vxF7V4VSqnLaZ'}).",
+  "input_tokens": null,
+  "output_tokens": null,
+  "latency_s": 1.026691667000705,
+  "error": "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CekrnLW2vxF7V4VSqnLaZ'}"
+}

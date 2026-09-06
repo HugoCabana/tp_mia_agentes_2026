@@ -10,6 +10,7 @@ de entrada pública de su entrega.
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from mia_agents.llm_client import LLMClient
@@ -35,11 +36,23 @@ def build_agent(config: dict[str, Any] | None = None) -> MyAgent:
     """
     config = config or {}
 
+    if os.environ.get("ANTHROPIC_API_KEY") and "llm_client" not in config:
+        from student_framework.anthropic_provider import AnthropicClient
+        config["llm_client"] = AnthropicClient()
+
     llm = config.get("llm_client") or LLMClient.from_env()
 
     agent = MyAgent(
         llm_client=llm,
-        system_prompt=config.get("system_prompt", "Sos un agente muy eficiente hincha de River"),
+        system_prompt=config.get("system_prompt", (
+            "Sos un agente que resuelve salas de escape usando herramientas. "
+            "Reglas estrictas: "
+            "1. Siempre empezá con 'look' para ver los objetos y sus ids exactos. "
+            "2. Usá 'examine <id>' con el id exacto que viste en 'look' para inspeccionar cada objeto. "
+            "3. Usá 'take <id>' con el id exacto del objeto que querés agarrar. "
+            "4. Usá 'use <id_item> <id_target>' para usar un objeto del inventario sobre otro. "
+            "NUNCA inventes ids — solo usá los que aparecen en las respuestas de las herramientas."
+        )),
         max_iterations=config.get("max_iterations", 20),
         max_history_messages=config.get("max_history_messages", 100),
     )

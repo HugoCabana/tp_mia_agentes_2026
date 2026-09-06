@@ -1,0 +1,28 @@
+{
+  "scenario_id": "office-sequence",
+  "difficulty": "hard",
+  "ablation": "no_m1_tools",
+  "attempt": 1,
+  "user_message": "Te despiertas en una oficina vacía. Tu objetivo: salir por la puerta principal LLEVÁNDOTE el documento confidencial. Aviso importante: la puerta principal se sella en cuanto la abrís, así que asegurate de tener el documento contigo ANTES de abrirla. La puerta necesita una llave maestra; la llave maestra y el documento están en una caja fuerte del archivo; y la llave de esa caja está guardada en el depósito. Recorré los ambientes en el orden correcto.",
+  "goal": {
+    "type": "sequence",
+    "goals": [
+      {
+        "type": "item_in_inventory",
+        "item": "documento_confidencial"
+      },
+      {
+        "type": "item_open",
+        "item": "puerta_principal"
+      }
+    ]
+  },
+  "goal_achieved": false,
+  "goal_reason": "faltan condiciones: documento confidencial no está en el inventario; puerta principal está cerrada",
+  "steps": [],
+  "final_answer": "No se pudo completar la solicitud: el cliente LLM falló de forma persistente tras varios reintentos (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cekrfm2UXudeKdn5H69zj'}).",
+  "input_tokens": null,
+  "output_tokens": null,
+  "latency_s": 1.1211138340004254,
+  "error": "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cekrfm2UXudeKdn5H69zj'}"
+}

@@ -1,0 +1,19 @@
+{
+  "scenario_id": "vault-combination",
+  "difficulty": "extreme",
+  "ablation": "no_m1_tools",
+  "attempt": 0,
+  "user_message": "Te despiertas en el vestíbulo de una instalación. La puerta principal no tiene cerradura común: es un panel con tres ranuras etiquetadas para 'núcleos de energía'. No hay ningún núcleo a la vista aquí. Un pasillo lleva al resto de la instalación. Tendrás que encontrar los tres núcleos —están en salas distintas— y traerlos al panel. Algunas puertas y vitrinas están cerradas y sus llaves no están donde las necesitás.",
+  "goal": {
+    "type": "item_open",
+    "item": "puerta_principal"
+  },
+  "goal_achieved": false,
+  "goal_reason": "puerta principal está cerrada",
+  "steps": [],
+  "final_answer": "No se pudo completar la solicitud: el cliente LLM falló de forma persistente tras varios reintentos (Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cekrfvj8dxnTXXS5rqnXF'}).",
+  "input_tokens": null,
+  "output_tokens": null,
+  "latency_s": 1.0215720000014699,
+  "error": "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cekrfvj8dxnTXXS5rqnXF'}"
+}
